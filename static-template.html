@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Arun Kumar — Full-Stack Developer</title>
+<style>
+  :root{
+    --ink:#050505; --ink2:#0a0a0a; --charcoal:#111; --carbon:#161616;
+    --neon:#C6FF00; --mist:#a8a8a8; --snow:#f5f5f5; --line:rgba(255,255,255,.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--ink);color:var(--snow);font-family:'Segoe UI',Inter,system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.6}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 clamp(1.25rem,5vw,6rem)}
+  .kicker{font-family:ui-monospace,JetBrains Mono,monospace;font-size:.72rem;letter-spacing:.35em;
+    text-transform:uppercase;color:var(--neon)}
+  .neon-text{color:var(--neon);text-shadow:0 0 25px rgba(198,255,0,.55)}
+  .glass{background:linear-gradient(145deg,rgba(255,255,255,.05),rgba(255,255,255,.015));
+    border:1px solid var(--line);backdrop-filter:blur(16px);border-radius:24px;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 20px 60px -20px rgba(0,0,0,.8)}
+  .glass-n{ border:1px solid rgba(198,255,0,.22);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 0 50px -18px rgba(198,255,0,.4)}
+  .btn-p{display:inline-flex;align-items:center;gap:.6rem;padding:.9rem 1.6rem;border-radius:999px;
+    background:var(--neon);color:#050505;font-weight:700;box-shadow:0 0 30px -8px rgba(198,255,0,.6);
+    transition:box-shadow .3s}
+  .btn-p:hover{box-shadow:0 0 55px -6px rgba(198,255,0,.85)}
+  .btn-g{display:inline-flex;align-items:center;gap:.6rem;padding:.9rem 1.6rem;border-radius:999px;
+    border:1px solid rgba(255,255,255,.18);color:var(--snow);background:rgba(255,255,255,.02);
+    transition:.3s}
+  .btn-g:hover{border-color:rgba(198,255,0,.5);color:var(--neon)}
+  .grid-bg{position:absolute;inset:0;
+    background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+    background-size:56px 56px;
+    -webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 0,#000 30%,transparent 75%);
+    mask-image:radial-gradient(ellipse 80% 60% at 50% 0,#000 30%,transparent 75%)}
+  .radial{position:absolute;inset:0;
+    background:radial-gradient(circle at 50% 40%,rgba(198,255,0,.12),transparent 60%)}
+
+  /* nav */
+  nav{position:fixed;top:0;left:0;right:0;z-index:80;display:flex;justify-content:center;padding:16px}
+  .nav-in{max-width:1180px;width:100%;display:flex;align-items:center;justify-content:space-between;
+    padding:12px 22px;border-radius:18px}
+  .nav-links{display:flex;gap:6px}
+  .nav-links a{padding:8px 16px;border-radius:999px;font-size:.9rem;color:var(--mist)}
+  .nav-links a:hover{color:var(--neon)}
+
+  /* hero */
+  .hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;padding:120px 0 80px}
+  .orb{position:absolute;right:6%;top:50%;transform:translateY(-50%);width:440px;height:440px;max-width:78vw}
+  .orb .ring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(198,255,0,.18);animation:spin 24s linear infinite}
+  .orb .ring.r2{inset:60px;border-color:rgba(198,255,0,.13);animation-direction:reverse;animation-duration:18s}
+  .orb .ring.r3{inset:120px;border-color:rgba(255,255,255,.1);animation-duration:30s}
+  .orb .core{position:absolute;inset:0;display:grid;place-items:center}
+  .orb .ball{position:relative;height:180px;width:180px;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%,#d8ff4d,#C6FF00 45%,#6f8c00);
+    box-shadow:0 0 80px -10px rgba(198,255,0,.7);animation:pulse 4s ease-in-out infinite}
+  .orb .ball span{position:absolute;inset:0;display:grid;place-items:center;font-weight:800;font-size:2.4rem;color:#050505}
+  .orb .ball i{position:absolute;inset:12px;border-radius:50%;border:1px solid rgba(255,255,255,.3)}
+  .chip{position:absolute;padding:6px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.12);
+    background:rgba(5,5,5,.7);font-family:ui-monospace,monospace;font-size:11px;color:var(--snow);
+    animation:floaty 6s ease-in-out infinite}
+  .hero h1{font-size:clamp(2.6rem,8vw,6rem);font-weight:800;line-height:.95;letter-spacing:-.02em}
+  .hero .name{font-size:clamp(1.4rem,3vw,2.2rem);font-weight:700;margin-top:1.6rem;color:var(--neon)}
+  .hero ul{margin-top:14px;font-family:ui-monospace,monospace;font-size:.8rem;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--mist)}
+  .hero ul li{display:flex;align-items:center;gap:10px;margin:4px 0}
+  .hero ul li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--neon)}
+  .hero p.lead{margin-top:1.6rem;max-width:540px;color:var(--mist);font-size:1.05rem}
+  .cta{display:flex;flex-wrap:wrap;gap:16px;margin-top:2rem}
+
+  /* panels */
+  .panel{position:absolute;display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:16px;
+    animation:floaty 7s ease-in-out infinite}
+  .panel .ic{height:36px;width:36px;display:grid;place-items:center;border-radius:10px;background:rgba(198,255,0,.1);color:var(--neon)}
+  .panel b{display:block;font-size:.85rem}
+  .panel small{font-family:ui-monospace,monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--mist)}
+
+  section.block{position:relative;padding:110px 0}
+  .sec-head .kicker{margin-bottom:14px}
+  .sec-head h2{font-size:clamp(2rem,5vw,3.4rem);font-weight:800;letter-spacing:-.02em}
+  .sec-head p{margin-top:14px;max-width:560px;color:var(--mist)}
+
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:54px;align-items:center;margin-top:46px}
+  .cards2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:26px}
+  .card2{padding:16px;border-radius:16px;transition:.3s}
+  .card2:hover{transform:translateY(-4px)}
+  .card2 .ic{height:36px;width:36px;display:grid;place-items:center;border-radius:10px;background:rgba(198,255,0,.1);color:var(--neon);margin-bottom:8px}
+  .card2 h4{font-size:.95rem}
+  .card2 p{font-size:.8rem;color:var(--mist);margin-top:4px}
+  .edu{margin-top:26px;display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:16px;border:1px solid rgba(198,255,0,.2);background:rgba(198,255,0,.05)}
+
+  .skills{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:46px}
+  .skill{padding:26px;border-radius:24px;display:flex;flex-direction:column;height:100%}
+  .skill .ic{height:48px;width:48px;display:grid;place-items:center;border-radius:12px;background:rgba(198,255,0,.1);color:var(--neon);margin-bottom:18px}
+  .skill h3{font-size:1.1rem;margin-bottom:14px}
+  .skill ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+  .skill li{display:flex;align-items:center;gap:10px;font-size:.85rem;color:var(--mist)}
+  .skill li::before{content:"";height:6px;width:6px;border-radius:50%;background:var(--neon);box-shadow:0 0 8px #C6FF00}
+  .skill .bar{margin-top:auto;height:2px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden}
+  .skill .bar i{display:block;height:100%;width:40%;background:var(--neon);box-shadow:0 0 10px #C6FF00;animation:slide 2.4s linear infinite}
+
+  .proj{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:46px}
+  .pcard{overflow:hidden;border-radius:24px;border:1px solid rgba(255,255,255,.1);background:rgba(17,17,17,.6);transition:.4s}
+  .pcard:hover{border-color:rgba(198,255,0,.4);transform:translateY(-6px)}
+  .pcard .img{height:200px;overflow:hidden;position:relative}
+  .pcard .img img{width:100%;height:100%;object-fit:cover;transition:transform .7s}
+  .pcard:hover .img img{transform:scale(1.08)}
+  .pcard .img::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,#111,transparent)}
+  .pcard .num{position:absolute;left:16px;top:16px;height:40px;width:40px;display:grid;place-items:center;border-radius:12px;border:1px solid rgba(198,255,0,.3);background:rgba(5,5,5,.7);font-weight:800;color:var(--neon)}
+  .pcard .body{padding:22px}
+  .pcard h3{font-size:1.15rem}
+  .pcard p{font-size:.82rem;color:var(--mist);margin-top:8px}
+  .pcard .feat{list-style:none;margin-top:14px;display:grid;gap:6px}
+  .pcard .feat li{display:flex;align-items:flex-start;gap:8px;font-size:.72rem;color:var(--mist)}
+  .pcard .feat li::before{content:"✓";color:var(--neon);font-weight:700}
+  .badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .badges span{font-family:ui-monospace,monospace;font-size:9px;text-transform:uppercase;letter-spacing:.05em;
+    padding:5px 9px;border-radius:999px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:var(--mist)}
+  .pactions{display:flex;gap:12px;margin-top:18px}
+  .pactions a{font-size:.8rem;padding:.7rem 1rem}
+
+  .svc{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:46px}
+  .svcc{padding:28px;border-radius:24px;border:1px solid rgba(255,255,255,.1);background:rgba(17,17,17,.5);transition:.4s;position:relative;overflow:hidden}
+  .svcc:hover{transform:translateY(-8px);border-color:rgba(198,255,0,.4)}
+  .svcc .glow{position:absolute;right:-60px;top:-60px;height:160px;width:160px;border-radius:50%;background:rgba(198,255,0,.1);filter:blur(40px);opacity:0;transition:.5s}
+  .svcc:hover .glow{opacity:1}
+  .svcc .ic{height:56px;width:56px;display:grid;place-items:center;border-radius:16px;border:1px solid rgba(198,255,0,.3);background:rgba(198,255,0,.1);color:var(--neon);margin-bottom:22px}
+  .svcc .no{position:absolute;right:24px;top:22px;font-size:2rem;font-weight:800;color:rgba(255,255,255,.1)}
+  .svcc h3{font-size:1.25rem}
+  .svcc>p{font-size:.85rem;color:var(--mist);margin-top:10px}
+  .svcc ul{list-style:none;margin-top:18px;display:grid;gap:10px}
+  .svcc li{display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--mist)}
+  .svcc li::before{content:"";margin-top:7px;height:14px;width:14px;border-radius:50%;background:rgba(198,255,0,.15);display:grid;place-items:center;flex:none}
+
+  .tl{position:relative;margin-top:54px}
+  .tl .line{position:absolute;left:24px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,transparent,rgba(198,255,0,.4),transparent)}
+  .tl .item{position:relative;padding-left:64px;margin-bottom:36px}
+  .tl .node{position:absolute;left:16px;top:6px;height:18px;width:18px;border-radius:50%;background:var(--ink);border:2px solid var(--neon);box-shadow:0 0 14px #C6FF00}
+  .tl .card{padding:20px;border-radius:18px}
+  .tl .card .yr{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--neon)}
+  .tl .card h3{font-size:1.15rem;margin-top:6px}
+  .tl .card .org{font-size:.85rem;color:var(--mist)}
+  .tl .card p{font-size:.85rem;color:var(--mist);margin-top:8px}
+
+  .contact{display:grid;grid-template-columns:1fr 1.1fr;gap:40px;margin-top:46px}
+  .ccards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .ccard{display:flex;align-items:center;gap:14px;padding:16px;border-radius:18px;transition:.3s}
+  .ccard:hover{transform:translateY(-4px)}
+  .ccard .ic{height:44px;width:44px;display:grid;place-items:center;border-radius:12px;background:rgba(198,255,0,.1);color:var(--neon)}
+  .ccard small{font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--mist)}
+  .ccard b{display:block;font-size:.85rem}
+  form.glass{padding:32px}
+  .field{margin-bottom:16px}
+  .field label{display:block;font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--mist);margin-bottom:6px}
+  .field input,.field textarea{width:100%;padding:12px 16px;border-radius:12px;border:1px solid rgba(255,255,255,.1);
+    background:rgba(5,5,5,.6);color:var(--snow);font-size:.9rem;outline:none}
+  .field input:focus,.field textarea:focus{border-color:rgba(198,255,0,.5)}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .submit{width:100%;justify-content:center;margin-top:8px}
+
+  footer{border-top:1px solid var(--line);padding:40px 0}
+  .foot{display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;align-items:center}
+  .foot .links{display:flex;flex-wrap:wrap;gap:18px}
+  .foot .links a{font-size:.85rem;color:var(--mist)}
+  .foot .links a:hover{color:var(--neon)}
+  .socials{display:flex;gap:12px}
+  .socials a{height:40px;width:40px;display:grid;place-items:center;border-radius:50%;border:1px solid rgba(255,255,255,.1);color:var(--snow)}
+  .socials a:hover{border-color:rgba(198,255,0,.5);color:var(--neon)}
+  .copy{margin-top:28px;padding-top:20px;border-top:1px solid rgba(255,255,255,.05);
+    display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;font-size:11px;color:rgba(168,168,168,.7);font-family:ui-monospace,monospace}
+
+  .reveal{opacity:0;transform:translateY(28px);animation:rise .9s forwards}
+  .reveal.d1{animation-delay:.1s}.reveal.d2{animation-delay:.2s}.reveal.d3{animation-delay:.3s}
+  .reveal.d4{animation-delay:.4s}.reveal.d5{animation-delay:.5s}
+
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+  @keyframes pulse{0%,100%{opacity:.85}50%{opacity:1}}
+  @keyframes slide{from{transform:translateX(-120%)}to{transform:translateX(360%)}}
+  @keyframes rise{to{opacity:1;transform:translateY(0)}}
+
+  @media(max-width:900px){
+    .two,.contact{grid-template-columns:1fr}
+    .skills{grid-template-columns:1fr 1fr}
+    .proj,.svc{grid-template-columns:1fr}
+    .orb{display:none}
+    .panel{display:none}
+    .nav-links{display:none}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in glass">
+    <a href="#home" style="font-weight:800">ARUN<span class="neon-text">.</span>KUMAR</a>
+    <div class="nav-links">
+      <a href="#home">Home</a><a href="#about">About</a><a href="#skills">Skills</a>
+      <a href="#projects">Projects</a><a href="#services">Services</a><a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header id="home" class="hero">
+  <div class="grid-bg"></div><div class="radial"></div>
+  <div class="orb">
+    <div class="ring"></div><div class="ring r2"></div><div class="ring r3"></div>
+    <div class="core"><div class="ball"><i></i><span>AK</span></div></div>
+    <span class="chip" style="left:-6%;top:22%">React.js</span>
+    <span class="chip" style="right:-4%;top:16%;animation-delay:1.2s">AI Automation</span>
+    <span class="chip" style="right:6%;bottom:20%;animation-delay:.6s">Python · SQL</span>
+  </div>
+  <div class="wrap">
+    <div class="panel glass glass-n" style="left:2%;top:24%">
+      <span class="ic">⚛</span><div><b>React.js</b><small>Frontend</small></div>
+    </div>
+    <div class="panel glass glass-n" style="right:8%;top:18%">
+      <span class="ic">✦</span><div><b>AI Automation</b><small>n8n · OpenAI</small></div>
+    </div>
+
+    <div class="kicker reveal" style="display:flex;gap:8px;align-items:center"><span>✦</span> Portfolio · 2026</div>
+    <h1 class="reveal d1">BUILDING<br><span> DIGITAL</span> <span class="neon-text">EXPERIENCES.</span></h1>
+    <div class="name reveal d2 neon-text">ARUN KUMAR</div>
+    <ul class="reveal d2">
+      <li>Full-Stack Developer</li><li>Software Developer</li><li>AI Automation Developer</li>
+    </ul>
+    <p class="lead reveal d3">I transform ideas into modern websites, intelligent applications, and automated business solutions.</p>
+    <div class="cta reveal d4">
+      <a class="btn-p" href="#projects">Explore My Work ↓</a>
+      <a class="btn-g" href="__RESUME__" download>Download Resume</a>
+      <a class="btn-g" href="#contact">Contact Me</a>
+    </div>
+  </div>
+</header>
+
+<!-- ABOUT -->
+<section id="about" class="block">
+  <div class="radial" style="opacity:.4"></div>
+  <div class="wrap two">
+    <div>
+      <div class="kicker">01 — About</div>
+      <h2>About Me</h2>
+      <p style="margin-top:18px;color:var(--mist)">I'm an Information Technology student passionate about web development, software engineering, and AI-powered automation.</p>
+      <p style="margin-top:12px;color:var(--mist)">I enjoy creating responsive websites, developing practical applications, and exploring technologies that solve real-world problems.</p>
+      <div class="cards2">
+        <div class="card2 glass"><div class="ic">🎓</div><h4>Education</h4><p>B.E. Information Technology at Annamalai University.</p></div>
+        <div class="card2 glass"><div class="ic">⚡</div><h4>Technical Interests</h4><p>Web stacks, Python automation, AI integrations, 3D web.</p></div>
+        <div class="card2 glass"><div class="ic">▦</div><h4>Development Approach</h4><p>Clean, responsive, user-focused, maintainable builds.</p></div>
+        <div class="card2 glass"><div class="ic">★</div><h4>Continuous Learning</h4><p>Always exploring React, APIs, n8n and OpenAI.</p></div>
+      </div>
+      <div class="edu">🎓 <div><b>B.E. Information Technology</b> · Annamalai University · Final Year Student</div></div>
+    </div>
+    <div class="glass glass-n" style="aspect-ratio:1;border-radius:32px;position:relative;display:grid;place-items:center">
+      <div style="position:absolute;inset:24px;border-radius:50%;border:1px solid rgba(198,255,0,.15);animation:spin 24s linear infinite"></div>
+      <div style="position:absolute;inset:48px;border-radius:50%;border:1px solid rgba(198,255,0,.1);animation:spin 18s linear infinite reverse"></div>
+      <div style="position:relative;width:180px;height:180px;display:grid;place-items:center">
+        <div style="position:absolute;inset:-8px;border-radius:50%;border:1px dashed rgba(198,255,0,.35);animation:spin 18s linear infinite"></div>
+        <img src="__PROFILE__" alt="Arun Kumar" style="width:150px;height:150px;border-radius:50%;object-fit:cover;border:3px solid rgba(198,255,0,.5);box-shadow:0 0 45px -8px rgba(198,255,0,.55)">
+        <span style="position:absolute;bottom:4px;background:#C6FF00;color:#050505;font-size:10px;font-weight:700;padding:3px 10px;border-radius:999px;font-family:ui-monospace,monospace">DEV</span>
+      </div>
+      <span class="chip" style="position:absolute;top:18%;left:14%">React.js</span>
+      <span class="chip" style="position:absolute;top:30%;right:10%;animation-delay:.6s">Python</span>
+      <span class="chip" style="position:absolute;bottom:24%;left:20%;animation-delay:1.2s">OpenAI</span>
+      <span class="chip" style="position:absolute;bottom:18%;right:16%;animation-delay:.4s">n8n</span>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="block">
+  <div class="grid-bg" style="opacity:.3"></div>
+  <div class="wrap">
+    <div class="sec-head"><div class="kicker">02 — Skills</div><h2>Technical Skills</h2>
+      <p>A focused toolkit across frontend, backend, AI automation, and modern developer tooling.</p></div>
+    <div class="skills">
+      <div class="skill glass"><div class="ic">▤</div><h3>Frontend</h3>
+        <ul><li>HTML5</li><li>CSS3</li><li>JavaScript</li><li>React.js</li><li>Responsive Web Design</li></ul>
+        <div class="bar"><i></i></div></div>
+      <div class="skill glass"><div class="ic">⚙</div><h3>Backend</h3>
+        <ul><li>Python</li><li>REST APIs</li><li>SQL</li></ul>
+        <div class="bar"><i></i></div></div>
+      <div class="skill glass"><div class="ic">✦</div><h3>AI & Automation</h3>
+        <ul><li>OpenAI API</li><li>n8n</li><li>AI Workflow Automation</li><li>Lead Automation</li><li>CRM Automation</li></ul>
+        <div class="bar"><i></i></div></div>
+      <div class="skill glass"><div class="ic">🔧</div><h3>Tools</h3>
+        <ul><li>Git</li><li>GitHub</li><li>VS Code</li><li>Netlify</li><li>Vercel</li></ul>
+        <div class="bar"><i></i></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="block">
+  <div class="radial" style="opacity:.3"></div>
+  <div class="wrap">
+    <div class="sec-head"><div class="kicker">03 — Projects</div><h2>Featured Projects</h2>
+      <p>A selection of work spanning AI automation, responsive web development, and creative digital experiences.</p></div>
+    <div class="proj">
+      <div class="pcard">
+        <div class="img"><span class="num">01</span><img src="__IMG1__" alt="AI CRM"></div>
+        <div class="body">
+          <h3>AI-Powered Business CRM & Lead Automation</h3>
+          <p>An intelligent CRM to manage leads, categorize enquiries, automate follow-ups, and surface sales insights.</p>
+          <ul class="feat"><li>Lead collection & management</li><li>AI lead categorization</li><li>Automated follow-up suggestions</li><li>Sales dashboard</li><li>Business reports</li></ul>
+          <div class="badges"><span>Python</span><span>React.js</span><span>SQL</span><span>n8n</span><span>REST APIs</span><span>OpenAI API</span></div>
+          <div class="pactions"><a class="btn-p" href="#">Live Demo</a><a class="btn-g" href="#">GitHub</a></div>
+        </div>
+      </div>
+      <div class="pcard">
+        <div class="img"><span class="num">02</span><img src="__IMG2__" alt="Business Website"></div>
+        <div class="body">
+          <h3>Responsive Business Website Development</h3>
+          <p>Modern, responsive business websites with professional layouts and mobile-friendly experiences.</p>
+          <ul class="feat"><li>Responsive layouts</li><li>Professional UI/UX</li><li>Business information sections</li><li>Contact forms</li><li>Modern animations</li></ul>
+          <div class="badges"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>React.js</span></div>
+          <div class="pactions"><a class="btn-p" href="#">Live Demo</a><a class="btn-g" href="#">GitHub</a></div>
+        </div>
+      </div>
+      <div class="pcard">
+        <div class="img"><span class="num">03</span><img src="__IMG3__" alt="Portfolio"></div>
+        <div class="body">
+          <h3>Portfolio Website</h3>
+          <p>A personal developer portfolio showcasing skills, projects, and professional background.</p>
+          <ul class="feat"><li>Interactive 3D hero</li><li>Glassmorphism UI</li><li>Scroll animations</li><li>Fully responsive</li><li>SEO optimized</li></ul>
+          <div class="badges"><span>React.js</span><span>Tailwind CSS</span><span>Framer Motion</span><span>Three.js</span></div>
+          <div class="pactions"><a class="btn-p" href="https://arunkumar17hz.github.io/arun-kumar-portfolio/#projects">Live Demo</a><a class="btn-g" href="https://github.com/Arunkumar17hz">GitHub</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="block">
+  <div class="grid-bg" style="opacity:.25"></div>
+  <div class="wrap">
+    <div class="sec-head"><div class="kicker">04 — Services</div><h2>What I Do</h2>
+      <p>Practical, end-to-end solutions — from polished websites to intelligent automation systems.</p></div>
+    <div class="svc">
+      <div class="svcc"><span class="glow"></span><div class="no">01</div><div class="ic">🌐</div>
+        <h3>Web Development</h3><p>Fast, responsive, visually striking websites for brands and individuals.</p>
+        <ul><li>Modern responsive websites</li><li>Business websites</li><li>Portfolio websites</li><li>Frontend development</li></ul></div>
+      <div class="svcc"><span class="glow"></span><div class="no">02</div><div class="ic">{ }</div>
+        <h3>Software Development</h3><p>Practical applications with clean architecture and reliable integrations.</p>
+        <ul><li>Python applications</li><li>Database integration</li><li>API development</li><li>Application development</li></ul></div>
+      <div class="svcc"><span class="glow"></span><div class="no">03</div><div class="ic">⚡</div>
+        <h3>AI Automation</h3><p>Intelligent systems that automate workflows and unlock efficiency.</p>
+        <ul><li>AI-powered CRM</li><li>Lead management automation</li><li>Business workflow automation</li><li>OpenAI API & n8n integrations</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section id="timeline" class="block">
+  <div class="radial" style="opacity:.3"></div>
+  <div class="wrap">
+    <div class="sec-head"><div class="kicker">05 — Journey</div><h2>Experience & Education</h2></div>
+    <div class="tl"><div class="line"></div>
+      <div class="item"><div class="node"></div><div class="card glass">
+        <div class="yr">2022 — Present</div><h3>B.E. Information Technology</h3>
+        <div class="org">Annamalai University</div>
+        <p>Final-year student building foundations in software engineering, web technologies, and automation.</p></div></div>
+      <div class="item"><div class="node"></div><div class="card glass">
+        <div class="yr">Career Status</div><h3>Entry-level / Fresher</h3>
+        <div class="org">Open to opportunities</div>
+        <p>Actively seeking roles in software, full-stack, and AI automation development.</p></div></div>
+      <div class="item"><div class="node"></div><div class="card glass">
+        <div class="yr">Career Interests</div><h3>Software · Full-Stack · Frontend · Python · AI Automation</h3>
+        <div class="org">Developer Roles</div>
+        <p>Passionate about roles that blend creativity, engineering, and intelligent automation.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="block">
+  <div class="radial" style="opacity:.4"></div>
+  <div class="noise wrap">
+    <div class="sec-head"><div class="kicker">06 — Contact</div>
+      <h2>LET'S BUILD SOMETHING GREAT TOGETHER.</h2>
+      <p>Have a project idea or an exciting opportunity? Let's connect and create something meaningful.</p></div>
+    <div class="contact">
+      <div class="ccards">
+        <a class="ccard glass" href="mailto:arunkumar.dev@example.com"><span class="ic">✉</span><div><small>Email</small><b>arunkumar.dev@example.com</b></div></a>
+        <a class="ccard glass" href="https://www.linkedin.com/in/arun-kumar-855320357/"><span class="ic">in</span><div><small>LinkedIn</small><b>arun-kumar-855320357</b></div></a>
+        <a class="ccard glass" href="https://github.com/Arunkumar17hz"><span class="ic">⌥</span><div><small>GitHub</small><b>Arunkumar17hz</b></div></a>
+        <a class="ccard glass" href="https://wa.me/919943519949"><span class="ic">✆</span><div><small>WhatsApp</small><b>+91 99435 19949</b></div></a>
+      </div>
+      <form class="glass glass-n" onsubmit="return false">
+        <div class="row2">
+          <div class="field"><label>Name</label><input placeholder="Your name"></div>
+          <div class="field"><label>Email</label><input type="email" placeholder="you@email.com"></div>
+        </div>
+        <div class="field"><label>Message</label><textarea rows="4" placeholder="Tell me about your project..."></textarea></div>
+        <button class="btn-p submit">Send Message</button>
+        <p style="text-align:center;font-family:ui-monospace,monospace;font-size:10px;color:var(--mist);margin-top:12px">Secure mailto form · editable in src/data/content.js</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div><div style="font-weight:800;font-size:1.1rem">ARUN<span class="neon-text">.</span>KUMAR</div>
+        <div style="font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--mist);margin-top:4px">Full-Stack · Software · AI Automation</div></div>
+      <nav class="links">
+        <a href="#home">Home</a><a href="#about">About</a><a href="#skills">Skills</a>
+        <a href="#projects">Projects</a><a href="#services">Services</a><a href="#contact">Contact</a>
+      </nav>
+      <div class="socials">
+        <a href="https://github.com/Arunkumar17hz">⌥</a>
+        <a href="https://www.linkedin.com/in/arun-kumar-855320357/">in</a>
+        <a href="mailto:arunkumar.dev@example.com">✉</a>
+      </div>
+    </div>
+    <div class="copy"><span>© 2026 Arun Kumar. All rights reserved.</span>
+      <span>Built with React · Vite · Three.js · Framer Motion · GSAP</span></div>
+  </div>
+</footer>
+
+</body>
+</html>
